@@ -12,11 +12,11 @@ export const ContactList = ({ onReset, items, onDelete }) => {
       <ButtonReset type="button" onClick={onReset}>
         Reset
       </ButtonReset>
-      {items.map(item => (
-        <ListItem key={item.id}>
+      {items.map(({ id, name, number }) => (
+        <ListItem key={id}>
           <ContactCard>
-            {item.name}:&nbsp;<span>{item.number}</span>
-            <ButtonDelete type="button" onClick={() => onDelete(item.id)}>
+            {name}:&nbsp;<span>{number}</span>
+            <ButtonDelete type="button" onClick={() => onDelete(id)}>
               Delete
             </ButtonDelete>
           </ContactCard>

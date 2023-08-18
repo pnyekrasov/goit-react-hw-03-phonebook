@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable array-callback-return */
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactsBook } from './App.staled';
 import { Component } from 'react';
@@ -29,11 +27,11 @@ export class App extends Component {
   }
 
   componentDidUpdate(_, prevSate) {
-    if (prevSate.contacts.length !== this.state.contacts.length) {
-      localStorage.setItem(
-        'current-contacts',
-        JSON.stringify(this.state.contacts)
-      );
+    const { contacts: prevContacts } = prevSate;
+    const { contacts: currentContacts } = this.state;
+
+    if (prevContacts.length !== currentContacts.length) {
+      localStorage.setItem('current-contacts', JSON.stringify(currentContacts));
     }
   }
 
@@ -79,7 +77,7 @@ export class App extends Component {
 
   resetContacts = () => {
     if (
-      confirm(
+      window.confirm(
         'Are you sure you want to return Contacts to their starting positions?'
       )
     ) {
