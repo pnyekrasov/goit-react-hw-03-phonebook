@@ -14,6 +14,10 @@ export const ContactCard = styled.p`
   font-size: 20px;
 `;
 
-export const Button = styled.button`
+export const ButtonDelete = styled.button`
   margin-left: 12px;
+`;
+
+export const ButtonReset = styled.button`
+  margin-bottom: 12px;
 `;
