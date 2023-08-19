@@ -19,40 +19,33 @@ export class App extends Component {
 
   componentDidMount() {
     const saveContacts = localStorage.getItem('current-contacts');
-    if (saveContacts !== null) {
+    saveContacts !== null &&
       this.setState({
         contacts: JSON.parse(saveContacts),
       });
-    }
   }
 
   componentDidUpdate(_, prevSate) {
     const { contacts: prevContacts } = prevSate;
     const { contacts: currentContacts } = this.state;
 
-    if (prevContacts.length !== currentContacts.length) {
+    prevContacts.length !== currentContacts.length &&
       localStorage.setItem('current-contacts', JSON.stringify(currentContacts));
-    }
   }
 
   handleAddContact = newContact => {
     const { contacts } = this.state;
 
-    if (
-      contacts.find(
-        contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
-      )
-    ) {
-      return alert(`${newContact.name} is already in contacts`);
-    }
-    this.setState(prevState => {
-      return {
-        contacts: [...prevState.contacts, newContact],
-      };
-    });
+    contacts.find(
+      contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
+    )
+      ? alert(`${newContact.name} is already in contacts`)
+      : this.setState(prevState => {
+          return { contacts: [...prevState.contacts, newContact] };
+        });
   };
 
-  handleDeleteContact = contactId => {
+  deleteContact = contactId => {
     this.setState(prevState => {
       return {
         contacts: prevState.contacts.filter(
@@ -68,7 +61,7 @@ export class App extends Component {
     });
   };
 
-  handleGetVisibleContact = () => {
+  getVisibleContact = () => {
     const { contacts, filter } = this.state;
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
@@ -76,20 +69,17 @@ export class App extends Component {
   };
 
   resetContacts = () => {
-    if (
-      window.confirm(
-        'Are you sure you want to return Contacts to their starting positions?'
-      )
-    ) {
+    window.confirm(
+      'Are you sure you want to return Contacts to their starting positions?'
+    ) &&
       this.setState({
         contacts: startContacts,
       });
-    }
   };
 
   render() {
     const { filter } = this.state;
-    const visibleContact = this.handleGetVisibleContact();
+    const visibleContact = this.getVisibleContact();
 
     return (
       <ContactsBook>
@@ -101,7 +91,7 @@ export class App extends Component {
         <ContactList
           onReset={this.resetContacts}
           items={visibleContact}
-          onDelete={this.handleDeleteContact}
+          onDelete={this.deleteContact}
         />
       </ContactsBook>
     );
