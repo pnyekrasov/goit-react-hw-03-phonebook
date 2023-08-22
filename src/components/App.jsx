@@ -19,18 +19,20 @@ export class App extends Component {
 
   componentDidMount() {
     const saveContacts = localStorage.getItem('current-contacts');
-    saveContacts !== null &&
+    if (saveContacts !== null) {
       this.setState({
         contacts: JSON.parse(saveContacts),
       });
+    }
   }
 
   componentDidUpdate(_, prevSate) {
     const { contacts: prevContacts } = prevSate;
     const { contacts: currentContacts } = this.state;
 
-    prevContacts.length !== currentContacts.length &&
+    if (prevContacts.length !== currentContacts.length) {
       localStorage.setItem('current-contacts', JSON.stringify(currentContacts));
+    }
   }
 
   handleAddContact = newContact => {
